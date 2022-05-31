@@ -14,11 +14,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_centerInParent="true"
+        android:layout_toLeftOf="@id/radio_button"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="United States 🇺🇸"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
+
+    <RadioButton
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/radio_button"/>
 
 </RelativeLayout>

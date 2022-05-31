@@ -6,9 +6,11 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.search_with_searchview.DetailsActivity
 import com.example.shardprf.databinding.ListItemCountryBinding
+
 
 class ExampleAdapter(countryList: ArrayList<DataModel>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -16,6 +18,7 @@ class ExampleAdapter(countryList: ArrayList<DataModel>) :
     private var countryFilterList = ArrayList<DataModel>()
 
     lateinit var mContext: Context
+    var selectedPosition = -1
 
     class CountryHolder(var viewBinding: ListItemCountryBinding) :
         RecyclerView.ViewHolder(viewBinding.root)
@@ -43,12 +46,36 @@ class ExampleAdapter(countryList: ArrayList<DataModel>) :
         countryHolder.viewBinding.selectCountryText.setTextColor(Color.BLACK)
         countryHolder.viewBinding.selectCountryText.text = countryFilterList[position].countryName
 
+        holder.viewBinding.radioButton.setChecked(selectedPosition == position)
+
+        holder.viewBinding.radioButton.setOnClickListener {
+            selectedPosition = position
+            Toast.makeText(mContext, countryFilterList[position].countryName, Toast.LENGTH_SHORT).show()
+            notifyDataSetChanged()
+        }
+
+
         holder.itemView.setOnClickListener {
             val intent = Intent(mContext, DetailsActivity::class.java)
             intent.putExtra("passselectedcountry", countryFilterList[position].countryName)
             mContext.startActivity(intent)
             Log.d("Selected:", countryFilterList[position].countryName)
         }
+
+//        countryHolder.viewBinding.radioButton.setOnCheckedChangeListener(
+//            CompoundButton.OnCheckedChangeListener { compoundButton, b ->
+//                // check condition
+//                if (b) {
+//                    // When checked
+//                    // update selected position
+//                    selectedPosition = position
+//
+//
+//                }
+//            })
+//
+//        countryHolder.viewBinding.radioButton.setChecked(position == selectedPosition);
+
     }
 
     // in this list data come from new filter list

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shardprf.databinding.ListItemCountryBinding
 import java.util.*
@@ -19,6 +20,7 @@ class RecyclerViewAdapter(private var countryList: ArrayList<String>) :
     var countryFilterList = ArrayList<String>()
 
     lateinit var mContext: Context
+    var selectedPosition = -1
 
     class CountryHolder(var viewBinding: ListItemCountryBinding) :
         RecyclerView.ViewHolder(viewBinding.root)
@@ -45,6 +47,14 @@ class RecyclerViewAdapter(private var countryList: ArrayList<String>) :
 
         countryHolder.viewBinding.selectCountryText.setTextColor(Color.BLACK)
         countryHolder.viewBinding.selectCountryText.text = countryFilterList[position]
+
+        holder.viewBinding.radioButton.setChecked(selectedPosition == position)
+
+        holder.viewBinding.radioButton.setOnClickListener {
+            selectedPosition = position
+            Toast.makeText(mContext, countryFilterList[position], Toast.LENGTH_SHORT).show()
+            notifyDataSetChanged()
+        }
 
         holder.itemView.setOnClickListener {
             val intent = Intent(mContext, DetailsActivity::class.java)
